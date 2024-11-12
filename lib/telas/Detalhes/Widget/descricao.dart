@@ -54,7 +54,7 @@ class Descricao extends StatelessWidget {
         ),
         Text(
           descricao,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             color: Colors.grey,
           ),

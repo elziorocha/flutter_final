@@ -28,7 +28,7 @@ class DescricaoDetalhes extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "\$${produto.preco}",
+                  "R\$${produto.preco}",
                   style: const TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 25,

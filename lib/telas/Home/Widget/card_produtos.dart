@@ -64,7 +64,7 @@ class CardProdutos extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      "\$ ${produto.preco}",
+                      "R\$${produto.preco}",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17,

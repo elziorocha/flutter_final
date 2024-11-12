@@ -8,14 +8,33 @@ class CarrinhoProvider extends ChangeNotifier {
 
   void toggleFavorite(ProdutoModelo produto) {
     if (_carrinho.contains(produto)) {
-      for (ProdutoModelo element in _carrinho) {
-        element.quantidade++;
-      }
+      int index = _carrinho.indexOf(produto);
+      _carrinho[index].quantidade++;
     } else {
+      produto.quantidade = 1;
       _carrinho.add(produto);
     }
-
     notifyListeners();
+  }
+
+  void incrementQnt(int index) {
+    _carrinho[index].quantidade++;
+    notifyListeners();
+  }
+
+  void decrementQnt(int index) {
+    if (_carrinho[index].quantidade > 1) {
+      _carrinho[index].quantidade--;
+      notifyListeners();
+    }
+  }
+
+  double precoTotal() {
+    double total = 0.0;
+    for (ProdutoModelo element in _carrinho) {
+      total += element.preco * element.quantidade;
+    }
+    return total;
   }
 
   static CarrinhoProvider of(

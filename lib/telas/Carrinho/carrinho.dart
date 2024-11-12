@@ -2,18 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_final/Provider/carrinho_provider.dart';
 import 'package:flutter_final/constants.dart';
+import 'package:flutter_final/telas/Carrinho/carrinho_total.dart';
 
 import '../bottom_navbar.dart';
 
-class Carrinho extends StatelessWidget {
+class Carrinho extends StatefulWidget {
   const Carrinho({super.key});
 
+  @override
+  State<Carrinho> createState() => _CarrinhoState();
+}
+
+class _CarrinhoState extends State<Carrinho> {
   @override
   Widget build(BuildContext context) {
     final provider = CarrinhoProvider.of(context);
     final finalList = provider.carrinho;
 
+    quantidadeProduto(IconData icon, int index) {
+      return GestureDetector(
+        onTap: () {
+          setState(() {
+            icon == Icons.add
+                ? provider.incrementQnt(index)
+                : provider.decrementQnt(index);
+          });
+        },
+        child: Icon(
+          icon,
+          size: 20,
+        ),
+      );
+    }
+
     return Scaffold(
+
+      bottomSheet: const CarrinhoTotal(),
       backgroundColor: backgroundSecondary,
       body: SafeArea(
         child: Column(
@@ -65,12 +89,12 @@ class Carrinho extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
                           ),
-                          padding: const EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(10),
                           child: Row(
                             children: [
                               Container(
-                                height: 100,
-                                width: 90,
+                                height: 120,
+                                width: 100,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   color: backgroundSecondary,
@@ -116,6 +140,65 @@ class Carrinho extends StatelessWidget {
                               )
                             ],
                           ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 35,
+                        right: 35,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                finalList.removeAt(index);
+                                setState(() {});
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                                size: 25,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: contentColor,
+                                border: Border.all(
+                                  color: Colors.grey.shade200,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  quantidadeProduto(Icons.add, index),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    itensCarrinho.quantidade.toString(),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  quantidadeProduto(Icons.remove, index),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       )
                     ],
